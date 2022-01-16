@@ -6,7 +6,7 @@
 
   <groupId>com.datta.App1</groupId>
   <artifactId>maven-App1</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   
   <name>maven-App1</name>
   <!-- FIXME change it to the project's website -->
