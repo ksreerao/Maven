@@ -58,8 +58,7 @@ pipeline {
 		    steps {
 		        //sshScript remote: remote, script: "abc.sh"  	
 			sshPut remote: remote1, from: 'target/java-maven-1.0.war', into: '/home/admin/workspace/nexus/Server/webapps'
-'
-			
+
 		    }
     	}
     	stage ('Integration-Test') {
