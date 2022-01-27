@@ -34,7 +34,7 @@ pipeline
 			}
 			steps
 			{
-				sh ' ${mvnHome}/bin/mvn clean package '
+				sh "'${mvnHome}/bin/mvn' clean package"
 			}
 			post
 			{
@@ -68,10 +68,10 @@ pipeline
 				parallel (
 					'integration' : {
 						unstash 'Source'
-						sh ' ${mvnHome}/bin/mvn clean verify '
+						sh "'${mvnHome}/bin/mvn' clean verify "
 						},	'quality' : {
 								unstash 'Source'
-								sh ' ${mvnHome}/bin/mvn clean test '
+								sh "'${mvnHome}/bin/mvn' clean test "
 							}
 				)
 			}
@@ -99,7 +99,7 @@ pipeline
 			steps 
 			{	
 				unstash 'Source'
-				sh ' ${mvnHome}/bin/mvn clean package '
+				sh "'${mvnHome}/bin/mvn' clean package "
 			}
 			post
 			{
