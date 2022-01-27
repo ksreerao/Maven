@@ -18,7 +18,7 @@ pipeline
 			}
 			steps 
 			{
-				git 'https://github.com/ksreerao/Maven.git'
+				git branch: 'main', url: 'https://github.com/ksreerao/Maven.git'
 				stash 'Source'
 				script 
 				{
