@@ -34,7 +34,7 @@ pipeline
 			}
 			steps
 			{
-				sh ' ${master}/bin/mvn clean package '
+				sh ' ${mvnHome}/bin/mvn clean package '
 			}
 			post
 			{
