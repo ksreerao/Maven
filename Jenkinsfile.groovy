@@ -54,7 +54,17 @@ pipeline
 			}
 			steps 
 			{
-				deploy adapters: [tomcat8(credentialsId: '11b0eb45-0da9-46cd-9c4d-016c43f2ef3d', path: '', url: 'http://192.168.122.1:8090')], contextPath: null, war: '**/*.war'			}
+				copyArtifacts fingerprintArtifacts: true, projectName: 'build', selector: lastSuccessful()
+				
+			}
+			post
+			{
+				sucess
+				{
+					deploy adapters: [tomcat8(credentialsId: '11b0eb45-0da9-46cd-9c4d-016c43f2ef3d', path: '', url: 'http://192.168.122.1:8090')], contextPath: null, war: '**/*.war'
+				}
+				
+			}
 		}
 		stage ('Integration-Test') 
 		{
