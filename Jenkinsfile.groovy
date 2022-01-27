@@ -1,7 +1,7 @@
 def mvnHome
 def remote = [ : ]
 	remote.name = 'deploy'
-	remote.host = '92192.168.122.1'
+	remote.host = '192.168.122.1'
 	//remote.user = 'root'
 	//remote.password = 'datta'
 	remote.allowAnyHosts = true
