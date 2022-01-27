@@ -13,7 +13,7 @@ def remote1 = [:]
     	remote2.allowAnyHosts = true*/
 pipeline {
     
-	agent none
+	agent any
 	
 	stages {
 		//def mvnHome
