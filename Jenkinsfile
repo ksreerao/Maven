@@ -4,7 +4,7 @@ def mvnHome
 
 pipeline {
     agent none
-    stage {
+    stages {
         // def mvnHome
         stage ('Preparation') {
             agent {
