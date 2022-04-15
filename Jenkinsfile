@@ -1,6 +1,10 @@
 def mvnHome 
-
-
+def remote = [:]
+    remote.name = 'deploy'
+    remote.host = '192.168.56.10'
+    remote.user = 'root'
+    remote.password = 'vagrant'
+    remote.allowAnyHosts = true
 
 pipeline {
     agent none
@@ -33,7 +37,59 @@ pipeline {
                 }
             }
         }
-
+        stage ('Deploy-to-Stage'){
+            agent {
+                label 'GroupA'
+            }
+            // SSH-Steps-Plugin should be installed
+            //SCP-Publisher Plugin (Optional)
+            steps {
+                //ssScript remote: remote. script: "abc.sh"
+                sshPut remote: remote, from: 'target/java-maven-1.0.war', into: '/workspace/appServer/webapps'
+            }
+        }
+        stage ('Integration-Test') {
+            agent {
+                label 'GroupA'
+            }
+            steps {
+                parallel (
+                    'intergration' : {
+                        unstash 'Source'
+                        sh "'${mvnHome}/bin/mvn' clean verify"
+                    }, 'quality': {
+                        unstash 'Source'
+                        sh "'${mvnHome}/bin/mvn' clean test"
+                    }
+                )
+            }
+        }
+        stage ('approve') {
+            agent {
+                label 'GroupA'
+            }
+            steps {
+                timeout(time: 7, unit: 'DAYS') {
+                    // some block
+                    input message: 'Do you want to deploy?', submitter: 'admin'
+                }
+            }
+        }
+        stage ('Prod-Deploy') {
+            agent {
+                label 'GroupA'
+            }
+            steps {
+                unstash 'Source'
+                sh "'${mvnHome}/bin/mvn' clean package"
+            }
+            post {
+                always {
+                    archiveArtifacts '**/*.war'
+                    fingerprint '**/*.war'
+                }
+            }
+        }
     }
 }
 
